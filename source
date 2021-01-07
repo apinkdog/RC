@@ -1,0 +1,19 @@
+//@version=3
+study("Risk Mangement Trade Setup Indicator", overlay=false, precision=2)
+stopinput = input(defval=30,title="StopValue")
+atr1=stopinput
+accountuser=input(defval=1000, title="Account Size")
+riskuser=input(defval=2, maxval=100, title="Risk %")
+ebc = input(title="Off=Currency with 5 decimal places/On=Currency with 3 decimal places", type=bool, defval=false)
+account=accountuser*riskuser
+atrq=ebc==false?10000:100
+atrpipstop=atr1
+percentofaccount=accountuser*riskuser/100
+atrpoundperpoint=(percentofaccount/atrpipstop)/10
+mq2=ebc==false?100:1
+margin=atrpoundperpoint*200
+//plot(out1,title="DailyAtr", color=white, linewidth=3)
+plot(atrpipstop, style=circles, linewidth=1,title="AtrStop",color=red)
+plot(atrpoundperpoint, style=circles, linewidth=1, title="£perPoint",color=yellow)
+plot(percentofaccount, style=circles, linewidth=1, title="Amount Risking", color=white)
+plot(margin, style=circles, linewidth=1, title="Margin Required", color=green)
